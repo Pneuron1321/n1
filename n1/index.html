@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>BRATAN! SPOKOJNO! </title>
+    <title>HK Rovinj Rovigno </title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: #05080f;
+            background: #0a0500;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -27,8 +27,8 @@
             position: fixed;
             inset: 0;
             background-image:
-                linear-gradient(rgba(0,255,200,0.13) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,255,200,0.13) 1px, transparent 1px);
+                linear-gradient(rgba(255,60,0,0.10) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,60,0,0.10) 1px, transparent 1px);
             background-size: 64px 64px;
             z-index: 0;
             pointer-events: none;
@@ -49,14 +49,14 @@
             z-index: 10;
             text-align: center;
             padding: 60px 88px 52px;
-            background: rgba(3, 5, 14, 0.90);
-            border: 1px solid rgba(0, 255, 200, 0.65);
+            background: rgba(8, 3, 0, 0.92);
+            border: 2px solid rgba(255, 80, 0, 0.70);
             border-radius: 2px;
             backdrop-filter: blur(20px);
             box-shadow:
-                0 0 50px rgba(0, 255, 200, 0.20),
-                0 0 110px rgba(130, 0, 255, 0.18),
-                inset 0 0 70px rgba(0, 0, 0, 0.65);
+                0 0 50px rgba(255, 60, 0, 0.22),
+                0 0 110px rgba(180, 30, 0, 0.18),
+                inset 0 0 70px rgba(0, 0, 0, 0.75);
             animation: cardFloat 11s ease-in-out infinite;
         }
         @keyframes cardFloat {
@@ -65,7 +65,7 @@
         }
 
         /* Corners */
-        .c { position: absolute; width: 16px; height: 16px; border-color: rgba(0,255,200,1.0); border-style: solid; filter: drop-shadow(0 0 4px rgba(0,255,200,0.8)); }
+        .c { position: absolute; width: 20px; height: 20px; border-color: rgba(255,100,0,1.0); border-style: solid; filter: drop-shadow(0 0 6px rgba(255,80,0,0.9)); }
         .tl { top:-1px; left:-1px;  border-width:2px 0 0 2px; }
         .tr { top:-1px; right:-1px; border-width:2px 2px 0 0; }
         .bl { bottom:-1px; left:-1px;  border-width:0 0 2px 2px; }
@@ -73,10 +73,11 @@
 
         .tag {
             font-size: 10px;
-            letter-spacing: 5px;
-            color: rgba(0,255,200,0.90);
+            letter-spacing: 6px;
+            color: rgba(255,120,0,0.90);
             text-transform: uppercase;
             margin-bottom: 30px;
+            font-weight: 600;
         }
 
         /* Main greeting */
@@ -87,13 +88,13 @@
             letter-spacing: 0.42em;
             line-height: 1;
             display: inline-block;
-            background: linear-gradient(120deg, #00ffc8 0%, #7c6bff 35%, #f472b6 65%, #00ffc8 100%);
+            background: linear-gradient(120deg, #ff6000 0%, #ffaa00 40%, #fff 60%, #ff3000 100%);
             background-size: 250% 250%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: textFloat 8s ease-in-out infinite, gradShift 9s ease infinite;
-            filter: drop-shadow(0 0 28px rgba(0,255,200,0.55));
+            filter: drop-shadow(0 0 28px rgba(255,80,0,0.7));
         }
         @keyframes textFloat {
             0%   { transform: scaleY(0.76) translateY(0px); }
@@ -102,18 +103,19 @@
             100% { transform: scaleY(0.76) translateY(0px); }
         }
         @keyframes gradShift {
-            0%   { background-position: 0%   50%; filter: drop-shadow(0 0 28px rgba(0,255,200,0.55)); }
-            50%  { background-position: 100% 50%; filter: drop-shadow(0 0 40px rgba(167,139,250,0.75)); }
-            100% { background-position: 0%   50%; filter: drop-shadow(0 0 28px rgba(0,255,200,0.55)); }
+            0%   { background-position: 0%   50%; filter: drop-shadow(0 0 28px rgba(255,80,0,0.7)); }
+            50%  { background-position: 100% 50%; filter: drop-shadow(0 0 44px rgba(255,180,0,0.9)); }
+            100% { background-position: 0%   50%; filter: drop-shadow(0 0 28px rgba(255,80,0,0.7)); }
         }
 
         .subtitle {
             font-size: 0.82rem;
-            letter-spacing: 4px;
-            color: rgba(190,170,255,0.90);
+            letter-spacing: 5px;
+            color: rgba(255,160,60,0.85);
             text-transform: uppercase;
             margin-top: 22px;
             margin-bottom: 24px;
+            font-weight: 600;
         }
 
         .timer {
@@ -121,14 +123,14 @@
             font-size: clamp(1.6rem, 4vw, 2.8rem);
             font-weight: 700;
             letter-spacing: 0.12em;
-            color: #00ffc8;
-            text-shadow: 0 0 18px rgba(0,255,200,0.7), 0 0 40px rgba(0,255,200,0.35);
+            color: #ff6600;
+            text-shadow: 0 0 18px rgba(255,100,0,0.8), 0 0 40px rgba(255,60,0,0.4);
             margin-bottom: 28px;
             animation: timerGlow 2s ease-in-out infinite;
         }
         .timer.done {
-            color: #f472b6;
-            text-shadow: 0 0 18px rgba(244,114,182,0.8), 0 0 40px rgba(244,114,182,0.4);
+            color: #ffaa00;
+            text-shadow: 0 0 18px rgba(255,180,0,0.9), 0 0 40px rgba(255,140,0,0.5);
         }
         .emoji-bounce {
             display: inline-block;
@@ -155,10 +157,10 @@
             gap: 12px;
             margin-bottom: 30px;
         }
-        .dl { flex:1; height:1px; background:linear-gradient(90deg,transparent,rgba(0,255,200,0.85),transparent); }
+        .dl { flex:1; height:1px; background:linear-gradient(90deg,transparent,rgba(255,80,0,0.85),transparent); }
         .dd {
-            width:4px; height:4px; border-radius:50%;
-            background:#00ffc8; box-shadow:0 0 8px #00ffc8;
+            width:5px; height:5px; border-radius:50%;
+            background:#ff6600; box-shadow:0 0 10px #ff6600;
             animation: blink 2.8s ease-in-out infinite;
         }
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.1} }
@@ -409,7 +411,7 @@
     <div class="c tl"></div><div class="c tr"></div>
     <div class="c bl"></div><div class="c br"></div>
     <div class="tag">// system online //</div>
-    <h1 class="greeting">BRATAN! SKOKOJNO! <span class="emoji-bounce">😄</span></h1>
+    <h1 class="greeting">HK Rovinj Rovigno <span class="emoji-bounce">😄</span></h1>
     <p class="subtitle">HOROSHO.</p>
     <div id="timer" class="timer">00:02</div>
     <div class="divider"><div class="dl"></div><div class="dd"></div><div class="dl"></div></div>
