@@ -180,6 +180,85 @@
             font-size:.62rem; letter-spacing:4px;
             color:rgba(0,255,200,0.55); text-transform:uppercase;
         }
+
+        .music-wrap {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 18px;
+            gap: 6px;
+        }
+
+        .arrows {
+            display: flex;
+            gap: 10px;
+            animation: arrowBounce 0.7s ease-in-out infinite alternate;
+        }
+        .arrow {
+            font-size: 1.5rem;
+            color: #ffe600;
+            -webkit-text-stroke: 2px #111;
+            text-shadow:
+                0 2px 0 #000,
+                0 0 10px rgba(255,230,0,0.8);
+            line-height: 1;
+        }
+        @keyframes arrowBounce {
+            0%   { transform: translateY(-4px); opacity: 0.7; }
+            100% { transform: translateY(4px);  opacity: 1; }
+        }
+
+        .music-btn {
+            position: relative;
+            background: linear-gradient(145deg, #ffe94d, #ffb800, #cc8800);
+            border: none;
+            border-radius: 50%;
+            width: 72px;
+            height: 72px;
+            font-size: 1.9rem;
+            cursor: pointer;
+            color: #fff;
+            /* 3D volume effect */
+            box-shadow:
+                0 6px 0 #7a5000,
+                0 8px 16px rgba(0,0,0,0.6),
+                0 0 28px rgba(255,210,0,0.55),
+                inset 0 3px 6px rgba(255,255,255,0.45),
+                inset 0 -3px 6px rgba(0,0,0,0.3);
+            transition: box-shadow 0.1s, transform 0.1s;
+            animation: btnPulse 1.6s ease-in-out infinite;
+        }
+        .music-btn:hover {
+            box-shadow:
+                0 6px 0 #7a5000,
+                0 10px 24px rgba(0,0,0,0.7),
+                0 0 42px rgba(255,210,0,0.85),
+                inset 0 3px 6px rgba(255,255,255,0.45),
+                inset 0 -3px 6px rgba(0,0,0,0.3);
+            transform: scale(1.08) translateY(-2px);
+        }
+        .music-btn:active {
+            box-shadow:
+                0 2px 0 #7a5000,
+                0 4px 8px rgba(0,0,0,0.5),
+                0 0 20px rgba(255,210,0,0.5),
+                inset 0 3px 6px rgba(0,0,0,0.3);
+            transform: scale(0.97) translateY(4px);
+        }
+        .music-btn.playing {
+            background: linear-gradient(145deg, #ff8adb, #f472b6, #a0006e);
+            box-shadow:
+                0 6px 0 #6a0040,
+                0 8px 16px rgba(0,0,0,0.6),
+                0 0 28px rgba(244,114,182,0.7),
+                inset 0 3px 6px rgba(255,255,255,0.35),
+                inset 0 -3px 6px rgba(0,0,0,0.3);
+            animation: none;
+        }
+        @keyframes btnPulse {
+            0%, 100% { transform: scale(1) translateY(0); box-shadow: 0 6px 0 #7a5000, 0 8px 16px rgba(0,0,0,0.6), 0 0 28px rgba(255,210,0,0.55), inset 0 3px 6px rgba(255,255,255,0.45), inset 0 -3px 6px rgba(0,0,0,0.3); }
+            50%       { transform: scale(1.06) translateY(-3px); box-shadow: 0 9px 0 #7a5000, 0 14px 26px rgba(0,0,0,0.65), 0 0 48px rgba(255,220,0,0.9), inset 0 3px 6px rgba(255,255,255,0.45), inset 0 -3px 6px rgba(0,0,0,0.3); }
+        }
     </style>
 </head>
 <body>
@@ -190,9 +269,17 @@
     <div class="c tl"></div><div class="c tr"></div>
     <div class="c bl"></div><div class="c br"></div>
     <div class="tag">// system online //</div>
-    <h1 class="greeting">Привет, Дашка. <span class="emoji-bounce">😄</span></h1>
-    <p class="subtitle">Нужно больше времени.</p>
-    <div id="timer" class="timer">21:00</div>
+    <h1 class="greeting">BRATAN! SKOKOJNO! <span class="emoji-bounce">😄</span></h1>
+    <p class="subtitle">HOROSHO.</p>
+    <div id="timer" class="timer">00:03</div>
+    <div id="music-wrap" class="music-wrap">
+        <div class="arrows">
+            <span class="arrow">▼</span>
+            <span class="arrow">▼</span>
+            <span class="arrow">▼</span>
+        </div>
+        <button id="music-btn" class="music-btn" title="Играть музыку">🎵</button>
+    </div>
     <div class="divider"><div class="dl"></div><div class="dd"></div><div class="dl"></div></div>
     <div class="status">
         <div class="si"><div class="sd cyan"></div><span>Связь активна</span></div>
@@ -400,12 +487,14 @@ rafId = requestAnimationFrame(frame);
 // ── Timer ────────────────────────────────────────────────
 (function() {
     const el = document.getElementById('timer');
-    let seconds = 21 * 60;
+    const btn = document.getElementById('music-btn');
+    let seconds = 3;
 
     function tick() {
         if (seconds <= 0) {
             el.textContent = '00:00';
             el.classList.add('done');
+            document.getElementById('music-wrap').style.display = 'flex';
             return;
         }
         const m = String(Math.floor(seconds / 60)).padStart(2, '0');
@@ -416,6 +505,42 @@ rafId = requestAnimationFrame(frame);
     }
 
     tick();
+})();
+
+// ── Music player ─────────────────────────────────────────
+(function() {
+    const btn = document.getElementById('music-btn');
+    const tracks = [
+        'dugbork \u2013 Cypress Hill - We Live This Shit.m4a',
+        'The-Prodigy-You-ll-Be-Under-My-Wheels.m4a'
+    ];
+    let current = 0;
+    let audio = null;
+    let playing = false;
+
+    function playTrack(index) {
+        if (audio) { audio.pause(); audio = null; }
+        audio = new Audio(tracks[index]);
+        audio.addEventListener('ended', () => {
+            current = (current + 1) % tracks.length;
+            playTrack(current);
+        });
+        audio.play();
+    }
+
+    btn.addEventListener('click', () => {
+        if (!playing) {
+            playing = true;
+            btn.classList.add('playing');
+            btn.title = 'Пауза';
+            playTrack(current);
+        } else {
+            playing = false;
+            btn.classList.remove('playing');
+            btn.title = 'Играть музыку';
+            if (audio) { audio.pause(); }
+        }
+    });
 })();
 </script>
 </body>
