@@ -12,10 +12,14 @@
             background: #05080f;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
             font-family: 'Rajdhani', sans-serif;
+            padding: 40px 20px 60px;
+            gap: 40px;
         }
 
         body::before {
@@ -179,6 +183,65 @@
             position:fixed; bottom:20px; z-index:10;
             font-size:.62rem; letter-spacing:4px;
             color:rgba(0,255,200,0.55); text-transform:uppercase;
+        }
+
+        /* ── Photo card ── */
+        .photo-card {
+            position: relative;
+            z-index: 10;
+            max-width: 560px;
+            width: 100%;
+            background: rgba(3, 5, 14, 0.85);
+            border: 1px solid rgba(0,255,200,0.5);
+            border-radius: 2px;
+            backdrop-filter: blur(20px);
+            box-shadow:
+                0 0 50px rgba(0,255,200,0.15),
+                0 0 110px rgba(130,0,255,0.12),
+                inset 0 0 60px rgba(0,0,0,0.5);
+            overflow: hidden;
+            animation: cardFloat 13s ease-in-out infinite;
+            animation-delay: 1.5s;
+        }
+        .photo-tag {
+            font-size: 10px;
+            letter-spacing: 5px;
+            color: rgba(0,255,200,0.9);
+            text-transform: uppercase;
+            text-align: center;
+            padding: 16px 20px 12px;
+            border-bottom: 1px solid rgba(0,255,200,0.15);
+        }
+        .photo-img {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            filter: saturate(0.85) brightness(0.95);
+            transition: filter 0.5s;
+        }
+        .photo-card:hover .photo-img {
+            filter: saturate(1.1) brightness(1.05);
+        }
+        .photo-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                transparent 55%,
+                rgba(0,255,200,0.04) 80%,
+                rgba(3,5,14,0.55) 100%
+            );
+            pointer-events: none;
+        }
+        .photo-caption {
+            padding: 14px 20px;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: rgba(190,170,255,0.7);
+            text-transform: uppercase;
+            text-align: center;
+            border-top: 1px solid rgba(0,255,200,0.12);
         }
 
         /* ── Sidebar toggle button ── */
@@ -355,6 +418,17 @@
         <div class="si"><div class="sd purple"></div><span>Защита включена</span></div>
         <div class="si"><div class="sd pink"></div><span>Всё спокойно</span></div>
     </div>
+</div>
+
+<div class="photo-card">
+    <div class="c tl"></div><div class="c tr"></div>
+    <div class="c bl"></div><div class="c br"></div>
+    <div class="photo-tag">// bratans //</div>
+    <div style="position:relative;">
+        <img class="photo-img" src="photo_2026-02-27_00-50-33.jpg" alt="Bratans">
+        <div class="photo-overlay"></div>
+    </div>
+    <div class="photo-caption">always together · always strong</div>
 </div>
 
 <canvas id="cv-front"></canvas>
