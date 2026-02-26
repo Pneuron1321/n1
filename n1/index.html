@@ -181,84 +181,159 @@
             color:rgba(0,255,200,0.55); text-transform:uppercase;
         }
 
-        .music-wrap {
+        /* ── Sidebar toggle button ── */
+        .sb-toggle {
             display: none;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 18px;
-            gap: 6px;
-        }
-
-        .arrows {
-            display: flex;
-            gap: 10px;
-            animation: arrowBounce 0.7s ease-in-out infinite alternate;
-        }
-        .arrow {
-            font-size: 1.5rem;
-            color: #ffe600;
-            -webkit-text-stroke: 2px #111;
-            text-shadow:
-                0 2px 0 #000,
-                0 0 10px rgba(255,230,0,0.8);
-            line-height: 1;
-        }
-        @keyframes arrowBounce {
-            0%   { transform: translateY(-4px); opacity: 0.7; }
-            100% { transform: translateY(4px);  opacity: 1; }
-        }
-
-        .music-btn {
-            position: relative;
-            background: linear-gradient(145deg, #ffe94d, #ffb800, #cc8800);
+            position: fixed;
+            right: 0; top: 50%;
+            transform: translateY(-50%);
+            z-index: 200;
+            background: linear-gradient(180deg, #ffe94d, #ffb800, #cc8800);
             border: none;
-            border-radius: 50%;
-            width: 72px;
-            height: 72px;
-            font-size: 1.9rem;
+            border-radius: 10px 0 0 10px;
+            width: 44px; height: 80px;
+            font-size: 1.4rem;
             cursor: pointer;
+            box-shadow: -4px 0 18px rgba(255,210,0,0.5), inset 0 2px 4px rgba(255,255,255,0.4);
+            animation: togglePulse 1.8s ease-in-out infinite;
+            transition: width 0.2s;
+        }
+        .sb-toggle:hover { width: 52px; }
+        @keyframes togglePulse {
+            0%,100% { box-shadow: -4px 0 18px rgba(255,210,0,0.5), inset 0 2px 4px rgba(255,255,255,0.4); }
+            50%      { box-shadow: -4px 0 36px rgba(255,220,0,0.9), inset 0 2px 4px rgba(255,255,255,0.4); }
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            position: fixed;
+            top: 0; right: 0;
+            width: 280px; height: 100vh;
+            z-index: 190;
+            background: rgba(3, 5, 14, 0.96);
+            border-left: 1px solid rgba(0,255,200,0.5);
+            backdrop-filter: blur(24px);
+            box-shadow: -8px 0 40px rgba(0,255,200,0.12), -4px 0 80px rgba(130,0,255,0.12);
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+        .sidebar.open { transform: translateX(0); }
+
+        .sb-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 20px 14px;
+            border-bottom: 1px solid rgba(0,255,200,0.2);
+        }
+        .sb-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 4px;
+            color: rgba(0,255,200,0.9);
+        }
+        .sb-close {
+            background: none; border: none; cursor: pointer;
+            color: rgba(0,255,200,0.6); font-size: 1rem;
+            transition: color 0.2s;
+        }
+        .sb-close:hover { color: #f472b6; }
+
+        .sb-now {
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(0,255,200,0.12);
+        }
+        .sb-now-label {
+            font-size: 0.55rem; letter-spacing: 4px;
+            color: rgba(0,255,200,0.5); margin-bottom: 5px;
+        }
+        .sb-now-name {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.72rem; letter-spacing: 1px;
+            color: #00ffc8;
+            text-shadow: 0 0 10px rgba(0,255,200,0.5);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+
+        .sb-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 0;
+        }
+        .sb-list::-webkit-scrollbar { width: 3px; }
+        .sb-list::-webkit-scrollbar-track { background: transparent; }
+        .sb-list::-webkit-scrollbar-thumb { background: rgba(0,255,200,0.3); border-radius: 2px; }
+
+        .sb-track {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-left: 2px solid transparent;
+        }
+        .sb-track:hover { background: rgba(0,255,200,0.06); }
+        .sb-track.active {
+            border-left-color: #00ffc8;
+            background: rgba(0,255,200,0.08);
+        }
+        .sb-track-num {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.6rem; color: rgba(0,255,200,0.4);
+            min-width: 18px;
+        }
+        .sb-track.active .sb-track-num { color: #00ffc8; }
+        .sb-track-info { flex: 1; overflow: hidden; }
+        .sb-track-title {
+            font-size: 0.78rem; letter-spacing: 1px;
+            color: rgba(190,175,255,0.9);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .sb-track.active .sb-track-title { color: #fff; }
+        .sb-track-artist {
+            font-size: 0.62rem; letter-spacing: 1px;
+            color: rgba(190,175,255,0.45);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            margin-top: 2px;
+        }
+
+        /* ── Controls ── */
+        .sb-controls {
+            padding: 16px 20px 24px;
+            border-top: 1px solid rgba(0,255,200,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+        }
+        .ctrl-btn {
+            background: none;
+            border: 1px solid rgba(0,255,200,0.3);
+            border-radius: 8px;
+            color: rgba(0,255,200,0.8);
+            font-size: 1rem;
+            width: 40px; height: 40px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.15s;
+        }
+        .ctrl-btn:hover {
+            background: rgba(0,255,200,0.1);
+            border-color: #00ffc8;
             color: #fff;
-            /* 3D volume effect */
-            box-shadow:
-                0 6px 0 #7a5000,
-                0 8px 16px rgba(0,0,0,0.6),
-                0 0 28px rgba(255,210,0,0.55),
-                inset 0 3px 6px rgba(255,255,255,0.45),
-                inset 0 -3px 6px rgba(0,0,0,0.3);
-            transition: box-shadow 0.1s, transform 0.1s;
-            animation: btnPulse 1.6s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(0,255,200,0.3);
         }
-        .music-btn:hover {
-            box-shadow:
-                0 6px 0 #7a5000,
-                0 10px 24px rgba(0,0,0,0.7),
-                0 0 42px rgba(255,210,0,0.85),
-                inset 0 3px 6px rgba(255,255,255,0.45),
-                inset 0 -3px 6px rgba(0,0,0,0.3);
-            transform: scale(1.08) translateY(-2px);
+        .ctrl-btn:active { transform: scale(0.92); }
+        .ctrl-btn.main {
+            width: 52px; height: 52px; font-size: 1.3rem;
+            border-color: rgba(0,255,200,0.6);
+            box-shadow: 0 0 14px rgba(0,255,200,0.2);
         }
-        .music-btn:active {
-            box-shadow:
-                0 2px 0 #7a5000,
-                0 4px 8px rgba(0,0,0,0.5),
-                0 0 20px rgba(255,210,0,0.5),
-                inset 0 3px 6px rgba(0,0,0,0.3);
-            transform: scale(0.97) translateY(4px);
-        }
-        .music-btn.playing {
-            background: linear-gradient(145deg, #ff8adb, #f472b6, #a0006e);
-            box-shadow:
-                0 6px 0 #6a0040,
-                0 8px 16px rgba(0,0,0,0.6),
-                0 0 28px rgba(244,114,182,0.7),
-                inset 0 3px 6px rgba(255,255,255,0.35),
-                inset 0 -3px 6px rgba(0,0,0,0.3);
-            animation: none;
-        }
-        @keyframes btnPulse {
-            0%, 100% { transform: scale(1) translateY(0); box-shadow: 0 6px 0 #7a5000, 0 8px 16px rgba(0,0,0,0.6), 0 0 28px rgba(255,210,0,0.55), inset 0 3px 6px rgba(255,255,255,0.45), inset 0 -3px 6px rgba(0,0,0,0.3); }
-            50%       { transform: scale(1.06) translateY(-3px); box-shadow: 0 9px 0 #7a5000, 0 14px 26px rgba(0,0,0,0.65), 0 0 48px rgba(255,220,0,0.9), inset 0 3px 6px rgba(255,255,255,0.45), inset 0 -3px 6px rgba(0,0,0,0.3); }
-        }
+        .ctrl-btn.main:hover { box-shadow: 0 0 22px rgba(0,255,200,0.5); }
     </style>
 </head>
 <body>
@@ -272,14 +347,6 @@
     <h1 class="greeting">BRATAN! SKOKOJNO! <span class="emoji-bounce">😄</span></h1>
     <p class="subtitle">HOROSHO.</p>
     <div id="timer" class="timer">00:03</div>
-    <div id="music-wrap" class="music-wrap">
-        <div class="arrows">
-            <span class="arrow">▼</span>
-            <span class="arrow">▼</span>
-            <span class="arrow">▼</span>
-        </div>
-        <button id="music-btn" class="music-btn" title="Играть музыку">🎵</button>
-    </div>
     <div class="divider"><div class="dl"></div><div class="dd"></div><div class="dl"></div></div>
     <div class="status">
         <div class="si"><div class="sd cyan"></div><span>Связь активна</span></div>
@@ -289,6 +356,28 @@
 </div>
 
 <canvas id="cv-front"></canvas>
+
+<!-- Sidebar toggle -->
+<button id="sb-toggle" class="sb-toggle" title="Плейлист">🎵</button>
+
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar">
+    <div class="sb-header">
+        <span class="sb-title">// playlist //</span>
+        <button class="sb-close" id="sb-close">✕</button>
+    </div>
+    <div class="sb-now">
+        <div class="sb-now-label">NOW PLAYING</div>
+        <div class="sb-now-name" id="sb-now-name">—</div>
+    </div>
+    <div class="sb-list" id="sb-list"></div>
+    <div class="sb-controls">
+        <button class="ctrl-btn" id="ctrl-prev" title="Предыдущий">⏮</button>
+        <button class="ctrl-btn main" id="ctrl-play" title="Играть">▶</button>
+        <button class="ctrl-btn" id="ctrl-stop" title="Стоп">⏹</button>
+        <button class="ctrl-btn" id="ctrl-next" title="Следующий">⏭</button>
+    </div>
+</div>
 <div class="footer">cyber · space · v2.0</div>
 <div id="fps" style="
     position: fixed; top: 16px; right: 18px; z-index: 100;
@@ -487,14 +576,13 @@ rafId = requestAnimationFrame(frame);
 // ── Timer ────────────────────────────────────────────────
 (function() {
     const el = document.getElementById('timer');
-    const btn = document.getElementById('music-btn');
     let seconds = 3;
 
     function tick() {
         if (seconds <= 0) {
             el.textContent = '00:00';
             el.classList.add('done');
-            document.getElementById('music-wrap').style.display = 'flex';
+            document.getElementById('sb-toggle').style.display = 'flex';
             return;
         }
         const m = String(Math.floor(seconds / 60)).padStart(2, '0');
@@ -507,40 +595,109 @@ rafId = requestAnimationFrame(frame);
     tick();
 })();
 
-// ── Music player ─────────────────────────────────────────
+// ── Sidebar + Music player ────────────────────────────────
 (function() {
-    const btn = document.getElementById('music-btn');
-    const tracks = [
-        'https://raw.githubusercontent.com/Pneuron1321/n1/main/n1/dugbork%20%E2%80%93%20Cypress%20Hill%20-%20We%20Live%20This%20Shit.m4a',
-        'https://raw.githubusercontent.com/Pneuron1321/n1/main/n1/The-Prodigy-You-ll-Be-Under-My-Wheels.m4a'
+    const TRACKS = [
+        {
+            title: 'We Live This Shit',
+            artist: 'Cypress Hill',
+            src: 'https://raw.githubusercontent.com/Pneuron1321/n1/main/n1/dugbork%20%E2%80%93%20Cypress%20Hill%20-%20We%20Live%20This%20Shit.m4a'
+        },
+        {
+            title: "You'll Be Under My Wheels",
+            artist: 'The Prodigy',
+            src: 'https://raw.githubusercontent.com/Pneuron1321/n1/main/n1/The-Prodigy-You-ll-Be-Under-My-Wheels.m4a'
+        }
     ];
+
     let current = 0;
     let audio = null;
-    let playing = false;
+    let isPlaying = false;
 
-    function playTrack(index) {
-        if (audio) { audio.pause(); audio = null; }
-        audio = new Audio(tracks[index]);
-        audio.addEventListener('ended', () => {
-            current = (current + 1) % tracks.length;
-            playTrack(current);
+    const sidebar   = document.getElementById('sidebar');
+    const sbToggle  = document.getElementById('sb-toggle');
+    const sbClose   = document.getElementById('sb-close');
+    const sbList    = document.getElementById('sb-list');
+    const sbNowName = document.getElementById('sb-now-name');
+    const ctrlPlay  = document.getElementById('ctrl-play');
+    const ctrlStop  = document.getElementById('ctrl-stop');
+    const ctrlPrev  = document.getElementById('ctrl-prev');
+    const ctrlNext  = document.getElementById('ctrl-next');
+
+    // Build track list
+    TRACKS.forEach((t, i) => {
+        const el = document.createElement('div');
+        el.className = 'sb-track';
+        el.dataset.index = i;
+        el.innerHTML = `
+            <span class="sb-track-num">${String(i+1).padStart(2,'0')}</span>
+            <div class="sb-track-info">
+                <div class="sb-track-title">${t.title}</div>
+                <div class="sb-track-artist">${t.artist}</div>
+            </div>`;
+        el.addEventListener('click', () => { current = i; play(); });
+        sbList.appendChild(el);
+    });
+
+    function updateUI() {
+        // Highlight active track
+        sbList.querySelectorAll('.sb-track').forEach((el, i) => {
+            el.classList.toggle('active', i === current);
         });
-        audio.play();
+        // Now playing name
+        sbNowName.textContent = isPlaying
+            ? `${TRACKS[current].artist} — ${TRACKS[current].title}`
+            : '—';
+        // Play button icon
+        ctrlPlay.textContent = isPlaying ? '⏸' : '▶';
     }
 
-    btn.addEventListener('click', () => {
-        if (!playing) {
-            playing = true;
-            btn.classList.add('playing');
-            btn.title = 'Пауза';
-            playTrack(current);
+    function play() {
+        if (audio) { audio.pause(); audio = null; }
+        audio = new Audio(TRACKS[current].src);
+        audio.addEventListener('ended', () => {
+            current = (current + 1) % TRACKS.length;
+            play();
+        });
+        audio.play();
+        isPlaying = true;
+        updateUI();
+    }
+
+    function pause() {
+        if (audio) audio.pause();
+        isPlaying = false;
+        updateUI();
+    }
+
+    function stop() {
+        if (audio) { audio.pause(); audio = null; }
+        isPlaying = false;
+        updateUI();
+    }
+
+    // Controls
+    ctrlPlay.addEventListener('click', () => {
+        if (isPlaying) { pause(); }
+        else if (audio) { audio.play(); isPlaying = true; updateUI(); }
+        else { play(); }
+    });
+    ctrlStop.addEventListener('click', stop);
+    ctrlNext.addEventListener('click', () => { current = (current + 1) % TRACKS.length; if (isPlaying) play(); else updateUI(); });
+    ctrlPrev.addEventListener('click', () => { current = (current - 1 + TRACKS.length) % TRACKS.length; if (isPlaying) play(); else updateUI(); });
+
+    // Sidebar open/close
+    sbToggle.addEventListener('click', () => {
+        if (sidebar.classList.contains('open')) {
+            sidebar.classList.remove('open');
         } else {
-            playing = false;
-            btn.classList.remove('playing');
-            btn.title = 'Играть музыку';
-            if (audio) { audio.pause(); }
+            sidebar.classList.add('open');
+            if (!isPlaying) play();
         }
     });
+    sbClose.addEventListener('click', () => sidebar.classList.remove('open'));
+
+    updateUI();
 })();
 </script>
 </body>
