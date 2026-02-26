@@ -126,6 +126,20 @@
             color: #f472b6;
             text-shadow: 0 0 18px rgba(244,114,182,0.8), 0 0 40px rgba(244,114,182,0.4);
         }
+        .emoji-bounce {
+            display: inline-block;
+            -webkit-text-fill-color: initial;
+            background: none;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25));
+            animation: softBounce 4s ease-in-out infinite;
+            transform-origin: center bottom;
+        }
+        @keyframes softBounce {
+            0%   { transform: translateY(0px)   scaleX(1.12) scaleY(0.88); }
+            50%  { transform: translateY(-8px)  scaleX(0.93) scaleY(1.10); }
+            100% { transform: translateY(0px)   scaleX(1.12) scaleY(0.88); }
+        }
+
         @keyframes timerGlow {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.75; }
@@ -176,7 +190,7 @@
     <div class="c tl"></div><div class="c tr"></div>
     <div class="c bl"></div><div class="c br"></div>
     <div class="tag">// system online //</div>
-    <h1 class="greeting">Привет, Дашка.</h1>
+    <h1 class="greeting">Привет, Дашка. <span class="emoji-bounce">😄</span></h1>
     <p class="subtitle">Нужно больше времени.</p>
     <div id="timer" class="timer">21:00</div>
     <div class="divider"><div class="dl"></div><div class="dd"></div><div class="dl"></div></div>
