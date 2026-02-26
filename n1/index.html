@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Привет, Мастер</title>
+    <title>Привет, Дашка</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -109,7 +109,26 @@
             color: rgba(190,170,255,0.90);
             text-transform: uppercase;
             margin-top: 22px;
-            margin-bottom: 36px;
+            margin-bottom: 24px;
+        }
+
+        .timer {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(1.6rem, 4vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: #00ffc8;
+            text-shadow: 0 0 18px rgba(0,255,200,0.7), 0 0 40px rgba(0,255,200,0.35);
+            margin-bottom: 28px;
+            animation: timerGlow 2s ease-in-out infinite;
+        }
+        .timer.done {
+            color: #f472b6;
+            text-shadow: 0 0 18px rgba(244,114,182,0.8), 0 0 40px rgba(244,114,182,0.4);
+        }
+        @keyframes timerGlow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.75; }
         }
 
         .divider {
@@ -157,8 +176,9 @@
     <div class="c tl"></div><div class="c tr"></div>
     <div class="c bl"></div><div class="c br"></div>
     <div class="tag">// system online //</div>
-    <h1 class="greeting">Привет, Мастер!</h1>
-    <p class="subtitle">Добро пожаловать в систему</p>
+    <h1 class="greeting">Привет, Дашка.</h1>
+    <p class="subtitle">Нужно больше времени.</p>
+    <div id="timer" class="timer">21:00</div>
     <div class="divider"><div class="dl"></div><div class="dd"></div><div class="dl"></div></div>
     <div class="status">
         <div class="si"><div class="sd cyan"></div><span>Связь активна</span></div>
@@ -362,6 +382,27 @@ document.addEventListener('visibilitychange', () => {
 });
 
 rafId = requestAnimationFrame(frame);
+
+// ── Timer ────────────────────────────────────────────────
+(function() {
+    const el = document.getElementById('timer');
+    let seconds = 21 * 60;
+
+    function tick() {
+        if (seconds <= 0) {
+            el.textContent = '00:00';
+            el.classList.add('done');
+            return;
+        }
+        const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+        const s = String(seconds % 60).padStart(2, '0');
+        el.textContent = m + ':' + s;
+        seconds--;
+        setTimeout(tick, 1000);
+    }
+
+    tick();
+})();
 </script>
 </body>
 </html>
